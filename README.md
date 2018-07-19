@@ -1,2 +1,2 @@
 # useful-scripts
-Collection of useful script of varios types.
+Collection of useful script of various types.

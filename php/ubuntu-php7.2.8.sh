@@ -1,4 +1,10 @@
 #!/bin/bash
+
+if [ ! "$BASH_VERSION" ] ; then
+	echo "Run with: bash $0"
+    exit 1
+fi
+
 if [ "$EUID" -ne 0 ]
 	then echo "Please run as root"
 	exit

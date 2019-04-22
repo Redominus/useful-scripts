@@ -32,7 +32,7 @@ function main {
 	apt install -y libzip-dev bison autoconf build-essential pkg-config git-core \
 	libltdl-dev libbz2-dev libxml2-dev libxslt1-dev libssl-dev libicu-dev \
 	libpspell-dev libenchant-dev libmcrypt-dev libpng-dev libjpeg8-dev \
-	libfreetype6-dev libmysqlclient-dev libreadline-dev libcurl4-openssl-dev
+	libfreetype6-dev libmysqlclient-dev libcurl4-openssl-dev
 
 	bold_echo "Downloading php source"
 	wget https://github.com/php/php-src/archive/php-$VERSION.tar.gz
@@ -43,15 +43,15 @@ function main {
 	./buildconf --force
 
 	CONFIGURE_STRING="--prefix=$INSTALL_DIR --with-bz2 --with-zlib --enable-zip --disable-cgi \
-	   --enable-soap --enable-intl --with-openssl --with-readline --with-curl \
+	   --enable-soap --enable-intl --with-openssl --with-curl \
 	   --enable-ftp --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd \
 	   --enable-sockets --enable-pcntl --with-pspell --with-enchant --with-gettext \
-	   --with-gd --enable-exif --with-jpeg-dir --with-png-dir --with-freetype-dir --with-xsl \
+	   --enable-exif --with-jpeg-dir --with-png-dir --with-freetype-dir --with-xsl \
 	   --enable-bcmath --enable-mbstring --enable-calendar --enable-simplexml --enable-json \
 	   --enable-hash --enable-session --enable-xml --enable-wddx --enable-opcache \
 	   --with-pcre-regex --with-config-file-path=$INSTALL_DIR/cli \
 	   --with-config-file-scan-dir=$INSTALL_DIR/etc --enable-cli --enable-maintainer-zts \
-	   --with-tsrm-pthreads --enable-debug"
+	   --with-tsrm-pthreads --enable-debug --without-pear"
 	./configure $CONFIGURE_STRING
 
 	bold_echo "Making & Installing php $VERSION"
@@ -86,7 +86,7 @@ function main {
 	ln -s $INSTALL_DIR/bin/php /usr/bin/phpzts
 
 	bold_echo "Cleaning tmp folder"
-	rm -rf $TMP_DIR
+	#rm -rf $TMP_DIR
 
 }
 function bold_echo {

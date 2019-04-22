@@ -30,56 +30,50 @@ function main {
 
 	apt update && \
 	apt install -y libzip-dev bison autoconf build-essential pkg-config git-core \
-	libltdl-dev libbz2-dev libxml2-dev libxslt1-dev libssl-dev libicu-dev \
-	libpspell-dev libenchant-dev libmcrypt-dev libpng-dev libjpeg8-dev \
-	libfreetype6-dev libmysqlclient-dev libcurl4-openssl-dev
+	libbz2-dev libxml2-dev libxslt1-dev libssl-dev libicu-dev \
+	libmysqlclient-dev libcurl4-openssl-dev
 
 	bold_echo "Downloading php source"
 	wget https://github.com/php/php-src/archive/php-$VERSION.tar.gz
 	tar --extract --gzip --file php-$VERSION.tar.gz
 
+	bold_echo "Downloading Pthreads"
+	cd "$TMP_DIR/php-src-php-$VERSION/ext"
+	git clone https://github.com/krakjoe/pthreads
+
 	bold_echo "Configuring PHP Build"
 	cd "$TMP_DIR/php-src-php-$VERSION"
 	./buildconf --force
 
-	CONFIGURE_STRING="--prefix=$INSTALL_DIR --with-bz2 --with-zlib --enable-zip --disable-cgi \
-	   --enable-soap --enable-intl --with-openssl --with-curl \
-	   --enable-ftp --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd \
-	   --enable-sockets --enable-pcntl --with-pspell --with-enchant --with-gettext \
-	   --enable-exif --with-jpeg-dir --with-png-dir --with-freetype-dir --with-xsl \
-	   --enable-bcmath --enable-mbstring --enable-calendar --enable-simplexml --enable-json \
-	   --enable-hash --enable-session --enable-xml --enable-wddx --enable-opcache \
-	   --with-pcre-regex --with-config-file-path=$INSTALL_DIR/cli \
-	   --with-config-file-scan-dir=$INSTALL_DIR/etc --enable-cli --enable-maintainer-zts \
-	   --with-tsrm-pthreads --enable-debug --without-pear"
+	CONFIGURE_STRING="
+		--prefix=$INSTALL_DIR \
+		--with-config-file-path=$INSTALL_DIR/cli
+		--with-config-file-scan-dir=$INSTALL_DIR/etc
+		--enable-pthreads=shared \
+		--with-curl \
+		--with-zlib \
+		--with-openssl \
+		--enable-simplexml \
+		--with-pdo-mysql=mysqlnd \
+		--with-mysqli \
+		--enable-shared \
+		--enable-maintainer-zts \
+		--enable-sockets \
+		--enable-mbstring \
+		--enable-opcache \
+		--without-pear \
+		--enable-debug"
 	./configure $CONFIGURE_STRING
 
 	bold_echo "Making & Installing php $VERSION"
 	make && make install
 	
-	bold_echo "Adding pthreads"
-	sudo chmod o+x "$INSTALL_DIR/bin/phpize"
-	sudo chmod o+x "$INSTALL_DIR/bin/php-config"
-
-	git clone https://github.com/krakjoe/pthreads.git
-	cd pthreads
-	"$INSTALL_DIR/bin/phpize"
-	bold_echo "Configuring pthreads"
-	./configure \
-	--prefix="$INSTALL_DIR" \
-	--with-libdir='/lib/x86_64-linux-gnu' \
-	--enable-pthreads=shared \
-	--with-php-config="$INSTALL_DIR/bin/php-config"
-	bold_echo "Making & Installing Pthreads"
-	make && make install
-
 	bold_echo "Creating php.ini"
 	cd "$TMP_DIR/php-src-php-$VERSION"
 	mkdir -p "$INSTALL_DIR/cli/"
 	cp "php.ini-production $INSTALL_DIR/cli/php.ini"
 
 	echo "extension=pthreads.so" | tee -a "$INSTALL_DIR/cli/php.ini"
-	echo "zend_extension=opcache.so" | tee -a "$INSTALL_DIR/cli/php.ini"
 
 	bold_echo "Creating link for phpzts command"
 	rm /usr/bin/phpzts

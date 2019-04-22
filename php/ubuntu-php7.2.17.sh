@@ -80,7 +80,7 @@ function main {
 	ln -s $INSTALL_DIR/bin/php /usr/bin/phpzts
 
 	bold_echo "Cleaning tmp folder"
-	#rm -rf $TMP_DIR
+	rm -rf $TMP_DIR
 
 }
 function bold_echo {

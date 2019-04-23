@@ -13,14 +13,16 @@ fi
 function main {
 	bold=$(tput bold)
 	normal=$(tput sgr0)
-	if [ -z "$PHP_VERSION"] || [ -z "$XDEBUG_VERSION"]; then
+	if [ -z "$PHP_VERSION" ] || [ -z "$XDEBUG_VERSION" ]; then
 		PHP_VERSION="7.2.17"
 		XDEBUG_VERSION="2.7.1"
 	fi
 	TMP_DIR=/tmp/phpzts
 	INSTALL_DIR=/etc/phpzts
-
-	/bin/rm -rf "$INSTAL_DIR"
+	if [ -d $INSTALL_DIR ]; then
+		echo "Deleting directory $INSTALL_DIR"
+		/bin/rm -rf "$INSTALL_DIR/"
+	fi
 	if [ -d $TMP_DIR ]; then
 		bold_echo "Removing old PHP ZTS data in $TMP_DIR"
 		/bin/rm -rf "$TMP_DIR/*"

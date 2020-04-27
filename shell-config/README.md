@@ -1,5 +1,4 @@
 # How it works
-* Copy .shellrc to ~
-* `ln -sf .shellrc/zshrc .zshrc`
+* bash ./installer.sh
 * ??????
 * profit

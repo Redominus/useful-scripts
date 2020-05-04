@@ -1,5 +1,7 @@
 echo 'Installing zsh & hstr'
-sudo add-apt-repository ppa:ultradvorka/ppa && sudo apt-get update && sudo apt-get install -y hstr zsh
+sudo add-apt-repository ppa:ultradvorka/ppa && sudo apt-get update && sudo apt-get install -y hstr zsh git
+echo 'Installing TPM'
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 echo 'Downloading fonts'
 if [ ! -d "~/.local/share/fonts" ] then
@@ -29,4 +31,5 @@ echo 'Copying .shellrc'
 cp -r .shellrc ~/
 echo 'Creating links to config files'
 ln -sf ~/.shellrc/zshrc ~/.zshrc
-ln -sf ~/.shellrc/.p10k.zsh ~/.p10k.zsh
+ln -sf ~/.shellrc/.p10k.zsh ~/.p10k.zsha
+ln -sf ~/.shellrc/.tmux.conf ~/.tmux.conf

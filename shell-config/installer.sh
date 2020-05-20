@@ -1,5 +1,11 @@
-echo 'Installing zsh & hstr'
-sudo add-apt-repository ppa:ultradvorka/ppa && sudo apt-get update && sudo apt-get install -y hstr zsh git
+echo 'Adding Repos zsh & hstr'
+#hstr
+sudo add-apt-repository ppa:ultradvorka/ppa 
+#Alacritty
+sudo add-apt-repository ppa:mmstick76/alacritty 
+echo 'Installing packages'
+sudo apt-get update && sudo apt-get install -y hstr zsh git alacritty
+
 echo 'Installing TPM'
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
@@ -22,14 +28,13 @@ sid_as_integer=$((sid)) # strips blanks if any
 session_leader_parent=$(ps -o ppid= -p "$sid_as_integer")
 session_leader_parent_as_integer=$((session_leader_parent))
 emulator=$(ps -o comm= -p "$session_leader_parent_as_integer")
-if echo $emulator | grep -q "tilix"; then
-	echo "Configuring Fonts"
-	dump /com/gexperts/Tilix/ | sed -e "/^font='.*/d" | sed "/^use-system-font=.*/d" | sed "/^visible-name=.*/i font='MesloLGS NF 12'" | sed "/^visible-name=.*/i use-system-font=false" | dconf load /com/gexperts/Tilix/
-fi
-
 echo 'Copying .shellrc'
 cp -r .shellrc ~/
+echo 'Configuring Alacritty'
+mkdir ~/.config/alacritty
+ln -sf ~/.shellrc/alacritty.yml ~/.config/alacritty/alacritty.yml
 echo 'Creating links to config files'
 ln -sf ~/.shellrc/zshrc ~/.zshrc
 ln -sf ~/.shellrc/.p10k.zsh ~/.p10k.zsha
 ln -sf ~/.shellrc/.tmux.conf ~/.tmux.conf
+

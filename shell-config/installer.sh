@@ -10,7 +10,7 @@ echo 'Installing TPM'
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 echo 'Downloading fonts'
-if [ ! -d "~/.local/share/fonts" ] then
+if [ ! -d "~/.local/share/fonts" ] ; then
 	mkdir ~/.local/share/fonts
 fi
 wget -O '~/.local/share/fonts/MesloLGS NF Regular.ttf' 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf'

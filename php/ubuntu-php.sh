@@ -14,8 +14,8 @@ function main {
 	bold=$(tput bold)
 	normal=$(tput sgr0)
 	if [ -z "$PHP_VERSION" ] || [ -z "$XDEBUG_VERSION" ]; then
-		PHP_VERSION="7.2.17"
-		XDEBUG_VERSION="2.7.1"
+		PHP_VERSION="7.3.22"
+		XDEBUG_VERSION="2.9.8"
 	fi
 	TMP_DIR=/tmp/phpzts
 	INSTALL_DIR=/etc/phpzts

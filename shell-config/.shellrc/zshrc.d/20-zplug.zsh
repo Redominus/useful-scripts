@@ -14,6 +14,8 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/composer", from:oh-my-zsh
 zplug "plugins/symfony2", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
+zplug "plugins/docker-compose", from:oh-my-zsh
+zplug "plugins/kubectl", from:oh-my-zsh
 
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
 
@@ -29,4 +31,4 @@ if ! zplug check --verbose; then
     fi
 fi
 
-zplug load
+zplug load --verbose

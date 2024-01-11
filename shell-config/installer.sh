@@ -31,7 +31,7 @@ echo 'Copying .shellrc'
 cp -r .shellrc ~/
 echo 'Configuring Alacritty'
 mkdir ~/.config/alacritty
-ln -sf ~/.shellrc/alacritty.yml ~/.config/alacritty/alacritty.yml
+ln -sf ~/.shellrc/alacritty.toml ~/.config/alacritty/alacritty.toml
 echo 'Creating links to config files'
 ln -sf ~/.shellrc/zshrc ~/.zshrc
 ln -sf ~/.shellrc/.p10k.zsh ~/.p10k.zsh

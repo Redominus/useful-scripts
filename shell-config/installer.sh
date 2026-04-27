@@ -62,3 +62,5 @@ echo 'Installing docker compose'
 sudo apt-get install docker-compose-plugin
 echo 'Installing kubectl'
 snap install kubectl --classic
+echo 'INstalling kustomize'
+curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash -s -- ~/.local/bin/
